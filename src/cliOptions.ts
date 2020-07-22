@@ -42,6 +42,12 @@ export const optionDefinitions = [
     description: 'Add missing keys that were found by the detective (default value is false)'
   },
   {
+    name: 'delete-missing-keys',
+    alias: 'd',
+    type: Boolean,
+    description: 'Delete missing keys from existing translation file'
+  },
+  {
     name: 'emit-error-on-extra-keys',
     alias: 'e',
     type: Boolean,

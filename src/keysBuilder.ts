@@ -33,6 +33,7 @@ export function buildTranslationFiles(inlineConfig: Config) {
     scopes: config.scopes,
     langs: config.langs,
     outputPath: config.output,
-    replace: config.replace
+    replace: config.replace,
+    deleteMissingKeys: config.deleteMissingKeys
   });
 }
