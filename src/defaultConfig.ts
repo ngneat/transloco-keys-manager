@@ -33,6 +33,9 @@ export const defaultConfig: Config = {
   // Add missing keys that were found by the detective (default value is false)
   addMissingKeys: false,
 
+  // Delete missing keys from existing file that were not found by the detective (default value is false)
+  deleteMissingKeys: false,
+
   // Emit an error and exit the process if extra keys were found (defaults to `false`)
   emitErrorOnExtraKeys: false,
 
