@@ -31,7 +31,7 @@ export function defaultConfig(projectType: ProjectType = 'application'): Config 
     // Replace the contents of a translation file (if it exists) with the generated one (default value is false, in which case files are merged)
     replace: false,
 
-    // Delete missing keys from existing file that were not found by the detective (default value is false)
+    // Delete missing keys from existing translation files (default value is false)
     deleteMissingKeys: false,
 
     /**

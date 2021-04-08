@@ -29,7 +29,7 @@ export function buildTranslationFile(
     newTranslation = mergeDeep({}, translation);
   } else {
     if (deleteMissing) {
-      currentTranslation = deleteMissingKeys(currentTranslation, translation);
+      deleteMissingKeys(currentTranslation, translation);
     }
     newTranslation = mergeDeep(translation, currentTranslation);
   }

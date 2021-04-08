@@ -43,7 +43,7 @@ export const optionDefinitions = [
   },
   {
     name: 'delete-missing-keys',
-    alias: 'd',
+    alias: 'D',
     type: Boolean,
     description: 'Delete missing keys from existing translation file'
   },
