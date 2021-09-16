@@ -11,9 +11,10 @@ type Params = {
   outputPath: string;
   replace: boolean;
   scopes: Scopes;
+  addEofNewline: boolean;
 };
 
-export function createTranslationFiles({ scopeToKeys, langs, outputPath, replace, scopes }: Params) {
+export function createTranslationFiles({ scopeToKeys, langs, outputPath, replace, scopes, addEofNewline }: Params) {
   const logger = getLogger();
 
   const scopeFiles = buildScopeFilePaths({ aliasToScope: scopes.aliasToScope, langs, outputPath });
@@ -21,11 +22,11 @@ export function createTranslationFiles({ scopeToKeys, langs, outputPath, replace
   const actions: FileAction[] = [];
 
   for (const { path } of globalFiles) {
-    actions.push(buildTranslationFile(path, scopeToKeys.__global, replace));
+    actions.push(buildTranslationFile(path, scopeToKeys.__global, replace, addEofNewline));
   }
 
   for (const { path, scope } of scopeFiles) {
-    actions.push(buildTranslationFile(path, scopeToKeys[scope], replace));
+    actions.push(buildTranslationFile(path, scopeToKeys[scope], replace, addEofNewline));
   }
 
   const newFiles = actions.filter(action => action.type === 'new');

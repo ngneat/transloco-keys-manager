@@ -420,6 +420,13 @@ transloco-keys-manager extract --replace
 transloco-keys-manager extract -r
 ```
 
+- `addEofNewline`: Add a newline character to the end of translation files when writing (default is to add nothing)
+
+```
+transloco-keys-manager extract --add-eof-newline
+transloco-keys-manager extract -n
+```
+
 - `addMissingKeys`: Add missing keys that were found by the detective (defaults to `false`)
 
 ```
@@ -466,6 +473,7 @@ module.exports = {
     replace?: boolean;
     defaultValue?: string | undefined;
     unflat?: boolean;
+    addEofNewline?: boolean;
   };
 }
 ```

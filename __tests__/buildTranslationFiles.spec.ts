@@ -420,4 +420,37 @@ describe('buildTranslationFiles', () => {
       assertResult(type, expected);
     });
   });
+
+  describe('addEofNewline', () => {
+    function assertEofChar(type: string, hasNewline: boolean, path?: string) {
+      const translation = fs.readFileSync(`./${sourceRoot}/${type}/i18n/${path || ''}en.json`, { encoding: 'utf-8' });
+      const maybeNewline = hasNewline ? '\n' : '';
+      expect(translation).toMatch(new RegExp(`}${maybeNewline}$`));
+    }
+
+    const type = 'addEofNewline';
+
+    beforeEach(() => removeI18nFolder(type));
+
+    it('should not add an eof newline if undefined', () => {
+      const config = gConfig(type);
+
+      buildTranslationFiles(config);
+      assertEofChar(type, false);
+    });
+
+    it('should not add an eof newline if false', () => {
+      const config = gConfig(type, { addEofNewline: false });
+
+      buildTranslationFiles(config);
+      assertEofChar(type, false);
+    });
+
+    it('should add an eof newline if true', () => {
+      const config = gConfig(type, { addEofNewline: true });
+
+      buildTranslationFiles(config);
+      assertEofChar(type, true);
+    });
+  });
 });

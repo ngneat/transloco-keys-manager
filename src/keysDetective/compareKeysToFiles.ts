@@ -17,9 +17,16 @@ type Params = {
   translationPath: string;
   addMissingKeys: boolean;
   emitErrorOnExtraKeys: boolean;
+  addEofNewline: boolean;
 };
 
-export function compareKeysToFiles({ scopeToKeys, translationPath, addMissingKeys, emitErrorOnExtraKeys }: Params) {
+export function compareKeysToFiles({
+  scopeToKeys,
+  translationPath,
+  addMissingKeys,
+  emitErrorOnExtraKeys,
+  addEofNewline
+}: Params) {
   const logger = getLogger();
   logger.startSpinner(`${messages.checkMissing} ✨`);
 
@@ -90,7 +97,7 @@ export function compareKeysToFiles({ scopeToKeys, translationPath, addMissingKey
           }
         }
 
-        addMissingKeys && writeFile(filePath, translation);
+        addMissingKeys && writeFile(filePath, translation, addEofNewline);
       }
     }
   }

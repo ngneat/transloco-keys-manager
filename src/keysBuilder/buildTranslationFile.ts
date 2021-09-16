@@ -10,7 +10,12 @@ export type FileAction = {
   type: 'new' | 'modified';
 };
 
-export function buildTranslationFile(path: string, translation = {}, replace = false): FileAction {
+export function buildTranslationFile(
+  path: string,
+  translation = {},
+  replace = false,
+  addEofNewline = false
+): FileAction {
   const currentTranslation = fsExtra.readJsonSync(path, { throws: false }) || {};
   const action: FileAction = { type: currentTranslation ? 'modified' : 'new', path };
 
@@ -25,7 +30,7 @@ export function buildTranslationFile(path: string, translation = {}, replace = f
     newTranslation = mergeDeep(translation, currentTranslation);
   }
 
-  fsExtra.outputFileSync(path, stringify(newTranslation));
+  fsExtra.outputFileSync(path, stringify(newTranslation) + (addEofNewline ? '\n' : ''));
 
   return action;
 }

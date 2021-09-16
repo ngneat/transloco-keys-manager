@@ -17,6 +17,7 @@ export type Config = {
   marker?: string;
   sort?: boolean;
   unflat?: boolean;
+  addEofNewline?: boolean;
   command?: 'extract' | 'find';
 };
 

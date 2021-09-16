@@ -55,7 +55,7 @@ export function generateKeys({ translationPath, scopeToKeys, config }: Params) {
     }
     for (const filePath of files) {
       const translation = readFile(filePath, { parse: true });
-      writeFile(filePath, mergeDeep({}, keys, translation));
+      writeFile(filePath, mergeDeep({}, keys, translation), config.addEofNewline);
     }
   }
 }

@@ -34,6 +34,12 @@ export const optionDefinitions = [
   },
   { name: 'sort', alias: 's', type: Boolean, description: `Sort keys using the sort() method` },
   { name: 'unflat', alias: 'u', type: Boolean, description: `Unflat the translation file` },
+  {
+    name: 'add-eof-newline',
+    alias: 'n',
+    type: Boolean,
+    description: 'Add a newline character to the end of translation files when writing (default is to add nothing)'
+  },
   { name: 'default-value', alias: 'd', type: String, description: `The default value of a generated key` },
   {
     name: 'add-missing-keys',
