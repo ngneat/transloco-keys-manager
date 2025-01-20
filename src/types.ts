@@ -9,6 +9,7 @@ export type Config = {
   addMissingKeys: boolean;
   removeExtraKeys: boolean;
   emitErrorOnExtraKeys: boolean;
+  scopedOnly?: boolean;
   scopes: Scopes;
   scopePathMap?: {
     [scopeAlias: string]: string;

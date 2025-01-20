@@ -1,6 +1,6 @@
 import { setConfig } from '../config';
 import { messages } from '../messages';
-import { Config } from '../types';
+import { Config, ScopeMap } from '../types';
 import { countKeys } from '../utils/keys.utils';
 import { getLogger } from '../utils/logger';
 import { resolveConfig } from '../utils/resolve-config';
@@ -23,6 +23,19 @@ export async function buildTranslationFiles(inlineConfig: Config) {
   const result = buildKeys(config);
   const { scopeToKeys, fileCount } = result;
 
+  if (config.scopedOnly) {
+    if (Object.keys(scopeToKeys.__global).length) {
+      logger.log(
+        '\n\x1b[31m%s\x1b[0m',
+        '⚠️',
+        'Global keys found with scopedOnly flag active\n'
+      );
+      if (config.emitErrorOnExtraKeys) {
+        process.exit(2);
+      }
+    }
+    delete (scopeToKeys as Partial<ScopeMap>).__global;
+  }
   logger.success(`${messages.extract} 🗝`);
 
   let keysFound = 0;

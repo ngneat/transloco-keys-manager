@@ -14,6 +14,7 @@ export async function createTranslationFiles({
   removeExtraKeys,
   scopes,
   fileFormat,
+  scopedOnly,
 }: Config & { scopeToKeys: ScopeMap }) {
   const logger = getLogger();
 
@@ -23,21 +24,24 @@ export async function createTranslationFiles({
     output,
     fileFormat,
   });
-  const globalFiles = langs.map((lang) => ({
-    path: `${output}/${lang}.${fileFormat}`,
-  }));
+
   const actions: FileAction[] = [];
 
-  for (const { path } of globalFiles) {
-    actions.push(
-      buildTranslationFile({
-        path,
-        translation: scopeToKeys.__global,
-        replace,
-        removeExtraKeys,
-        fileFormat,
-      }),
-    );
+  if (!scopedOnly) {
+    const globalFiles = langs.map((lang) => ({
+      path: `${output}/${lang}.${fileFormat}`,
+    }));
+    for (const { path } of globalFiles) {
+      actions.push(
+        buildTranslationFile({
+          path,
+          translation: scopeToKeys.__global,
+          replace,
+          removeExtraKeys,
+          fileFormat,
+        }),
+      );
+    }
   }
 
   for (const { path, scope } of scopeFiles) {

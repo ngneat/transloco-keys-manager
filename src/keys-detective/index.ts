@@ -1,7 +1,7 @@
 import { setConfig } from '../config';
 import { buildKeys } from '../keys-builder/build-keys';
 import { messages } from '../messages';
-import { Config } from '../types';
+import { Config, ScopeMap } from '../types';
 import { getLogger } from '../utils/logger';
 import { resolveConfig } from '../utils/resolve-config';
 
@@ -29,6 +29,19 @@ export function findMissingKeys(inlineConfig: Config) {
 
   const result = buildKeys(config);
   logger.success(`${messages.extract} 🗝`);
+  if (config.scopedOnly) {
+    if (Object.keys(result.scopeToKeys.__global).length) {
+      logger.log(
+        '\n\x1b[31m%s\x1b[0m',
+        '⚠️',
+        'Global keys found with scopedOnly flag active\n'
+      );
+      if (config.emitErrorOnExtraKeys) {
+        process.exit(2);
+      }
+    }
+    delete (result.scopeToKeys as Partial<ScopeMap>).__global;
+  }
 
   const { addMissingKeys, emitErrorOnExtraKeys, unflat } = config;
   compareKeysToFiles({
