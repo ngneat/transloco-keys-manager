@@ -44,13 +44,24 @@ export function resolveProjectBasePath(projectName?: string): {
 } {
   let projectPath = '';
 
+  let projectConfig;
   if (projectName) {
-    projectPath = normalizedGlob(`**/${projectName}`)[0];
+    // look for all project.json files and find the project.json that contains
+    // { name: "<projectName>" ... }
+    const projectConfigs = normalizedGlob(`**/${projectConfigFile}`);
+    for(const p of projectConfigs) {
+      const config = searchConfig(projectConfigFile, p);
+      if(config.name === projectName) {
+        projectConfig = config;
+        break;
+      }
+    }
+  } else {
+    projectConfig = searchConfig(projectConfigFile, projectPath);
   }
 
   const angularConfig = searchConfig(angularConfigFile, projectPath);
   const workspaceConfig = searchConfig(workspaceConfigFile, projectPath);
-  const projectConfig = searchConfig(projectConfigFile, projectPath);
 
   if (!angularConfig && !workspaceConfig && !projectConfig) {
     logNotFound([...angularConfigFile, workspaceConfigFile, projectConfigFile]);
